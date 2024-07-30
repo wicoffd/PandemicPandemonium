@@ -66,6 +66,7 @@ class Player {
         this.animations[2][3] = new Animator(ASSET_MANAGER.getAsset("./hero.png"), 0 + this.xColorPadding, 48 * 8, 48, this.yHeight, 2, 1);
     }
     updateBB() {
+
         this.lastBB = this.BB;
         this.BB = new BoundingBox((this.xPos + 15), (this.yPos + 41), 20, 8);
     };
@@ -133,7 +134,7 @@ class Player {
         this.updateBB();
 
         var that = this;
-        this.game.entities.forEach(function (entity) {
+        this.game.entities.forEach(function (entity) { // for each entity including items, walls and enemies.
             if (entity.BB && that.BB.collide(entity.BB)) {
                 if (entity instanceof Wall || entity instanceof Item) {
                     //Vertical Collision
@@ -217,7 +218,8 @@ class Player {
 
             if (Math.abs(this.velocity.left) < MIN_WALK || Math.abs(this.velocity.right) < MIN_WALK) {
                 this.state = 0;
-                if (this.game.left) {
+                //getDirection(){return this.game.}
+                if (this.game.left ) {
                     if (this.direction != "left") {
                         this.direction = "left";
                     }

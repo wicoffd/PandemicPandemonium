@@ -20,6 +20,7 @@ class GameEngine {
         this.rightUp = true;
         this.up = false;
         this.down = false;
+        this.direction = ""; // initialize direction as a string
         this.A = false;
         this.B = false;
         this.enter = false;
@@ -54,6 +55,7 @@ class GameEngine {
         gameLoop();
     };
 
+   
     startInput() {
         this.keyboardActive = false;
         var that = this;
@@ -72,27 +74,72 @@ class GameEngine {
             e.preventDefault(); // Prevent Scrolling
             that.wheel = e.deltaY;
         }
+        
+    
+
         function keydownListener(e) {
             that.keyboardActive = true;
+            function updateDirection(){
+                switch(true){// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch
+                    // switch based on bool return value
+                    case(that.left && that.up):
+                        that.direction = "UL";
+                        console.log("UL");
+                        break;
+                    case(that.right && that.up):
+                        that.direction = "UR";
+                        console.log("UR");
+                        break;
+                    case(that.left && that.down):
+                        that.direction = "DL";
+                        console.log("DL");
+                        break;
+                    case(that.right && that.down):
+                        that.direction = "DR";
+                        console.log("DR");
+                        break;
+                    case(that.left):
+                        console.log("L");
+                        that.direction = "L"
+                        
+                        break;
+                    case(that.right):
+                        that.direction = "R"
+                        console.log("R");
+                        break;
+                    case(that.up):
+                        that.direction = "U"
+                        console.log("U");
+                        break;
+                    case(that.down):
+                        that.direction = "D"
+                        console.log("D");
+                        break;
+                }
+            };
             // console.log(e);
             switch (e.code) {
                 case "ArrowLeft":
                 case "KeyA":
                     that.left = true;
                     that.leftUp = false;
+                    updateDirection();
                     break;
                 case "ArrowRight":
                 case "KeyD":
                     that.right = true;
                     that.rightUp = false;
+                    updateDirection();
                     break;
                 case "ArrowUp":
                 case "KeyW":
                     that.up = true;
+                    updateDirection();
                     break;
                 case "ArrowDown":
                 case "KeyS":
                     that.down = true;
+                    updateDirection();
                     break;
                 case "KeyZ":
                 case "Comma":
@@ -106,7 +153,7 @@ class GameEngine {
                     that.enter = true;
                     break;
                 case "KeyQ":
-                case "Slash":
+                case "Slash":// item switching function 
                     //setTimeout(function(){
                 //if(!this.busy){
                     switch (that.alive) {
